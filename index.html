@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Asgn1 Page</title>
+  </head>
+
+  <body onload="main()">
+    <canvas id="webgl" width="400" height="400">
+    Please use a browser that supports "canvas"
+    </canvas>
+
+    <script src="lib\cuon-utils.js"></script> <!--could be bad according to video somehow, not sure-->
+    <script src="lib\webgl-debug.js"></script>
+    <script src="lib\webgl-utils.js"></script>
+    <script src="Point.js"></script>
+    <script src="Triangle.js"></script>
+    <script src="Circle.js"></script>
+    <script src="asgn1.js"></script>
+
+    <br></br>
+
+    <input type="button" value="Clear Canvas" onclick="clearCanvas()"></input>
+
+    <h1> Drawing Mode: </h1>
+
+    <div>
+      <button type="button" id="pointButton">Rectangle</button>
+      <button type="button" id="triButton">Triangle</button>
+      <button type="button" id="circleButton">Circle</button>
+    </div>
+
+    <h1> Shape Color: </h1>
+
+    <div>
+        <label for="redSlider">Red</label>
+        <input type="range" id="redSlide" name="redSlider" min="0" max="100" value="100" class="slider" />
+        
+
+        <label for="greenSlider">Green</label>
+        <input type="range" id="greenSlide" name="greenSlider" min="0" max="100" value="100" class="slider" />
+        
+        <label for="blueSlider">Blue</label>
+        <input type="range" id="blueSlide" name="blueSlider" min="0" max="100" value="100" class="slider" />
+        
+    </div>
+
+    <div>
+      <label for="sizeSlider">Shape Size:</label>
+      <input type="range" id="sizeSlide" name="sizeSlider" min="0" max="40" value="10" class="slider" />
+
+      <label for="circleSlider">(Circles) Segment Count:</label>
+      <input type="range" id="circleSlide" name="circleSlider" min="3" max="50" value="10" class="slider" />
+
+    </div>
+
+  </body>
+</html>
