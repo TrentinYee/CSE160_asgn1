@@ -33,6 +33,8 @@ let g_selectedColor = [1.0, 1.0, 1.0, 1.0];
 let g_selectedSize = 10;
 let g_selectedType=POINT;
 let g_selectedSegment=10;
+let g_selectedLayer = 0;
+let g_fox = 0;
 
 // all the UI interaction
 function addActionsForHtmlUI() {
@@ -51,6 +53,26 @@ function addActionsForHtmlUI() {
 
   // Selecting the number of circle segments
   document.getElementById('circleSlide').addEventListener('mouseup', function() { g_selectedSegment = this.value});
+
+  // Selecting the layer
+  document.getElementById('layer1').onclick = function() { g_selectedLayer=0};
+  document.getElementById('layer2').onclick = function() { g_selectedLayer=1};
+  document.getElementById('layer3').onclick = function() { g_selectedLayer=2};
+
+  // Fox button
+  document.getElementById('drawfox').onclick = foxDie;
+  document.getElementById('destroyfox').onclick = foxLive;
+
+}
+
+function foxLive() {
+  g_fox = 0;
+  renderAllShapes();
+}
+
+function foxDie() {
+  g_fox = 1;
+  renderAllShapes();
 }
 
 function setupWebGL() {
@@ -120,14 +142,14 @@ function main() {
   //gl.drawArrays(gl.POINTS, 0, 1);
 }
 
-var g_shapesList = [];
+var g_shapesList = [[], [], []];
 
 //var g_points = []; // The array for the position of a mouse press
 //var g_colors = []; // The array for all the colors of the shapes stored
 //var g_sizes = []; // The array for all the sizes of the shapes stored
 
 function clearCanvas() {
-  g_shapesList = [];
+  g_shapesList[g_selectedLayer] = [];
   renderAllShapes();
 }
 
@@ -148,7 +170,7 @@ function click(ev) {
   point.position=[x, y];
   point.color=g_selectedColor.slice();
   point.size=g_selectedSize;
-  g_shapesList.push(point);
+  g_shapesList[g_selectedLayer].push(point);
 
   // Store the coordinates to g_points array
   //g_points.push([x, y]);
@@ -178,9 +200,17 @@ function renderAllShapes() {
   // Clear <canvas>
   gl.clear(gl.COLOR_BUFFER_BIT);
 
-  var len = g_shapesList.length;
-  for(var i = 0; i < len; i += 1) {
-    g_shapesList[i].render();
+  if (g_fox==1){
+    drawFox();
+  }
+
+  // loops through and draws each layer list in order
+  for(var j = 0; j < 3; j += 1) {
+    var currentLayer = g_shapesList[j];
+    var len = currentLayer.length;
+    for(var i = 0; i < len; i += 1) {
+      currentLayer[i].render();
+    }
   }
 }
 
